@@ -30,7 +30,7 @@ class Mailboxer::Conversation < ActiveRecord::Base
     participant(participant).merge(Mailboxer::Receipt.is_unread)
   }
   scope :not_trash,  lambda {|participant|
-    participant(participant).merge(Mailboxer::Receipt.not_trash)
+    receipts.merge(Mailboxer::Receipt.not_trash)
   }
   scope :between, lambda {|participant_one, participant_two|
     joins("INNER JOIN (#{Mailboxer::Notification.recipient(participant_two).to_sql}) participant_two_notifications " \
