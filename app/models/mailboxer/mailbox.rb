@@ -68,6 +68,15 @@ class Mailboxer::Mailbox
     conversations(options)
   end
 
+  #Returns the conversations in the trash of messageable
+  #
+  #Same as conversations({:mailbox_type => 'trash'})
+  def not_trash(options={})
+    options = options.merge(:mailbox_type => 'not_trash')
+    conversations(options)
+  end
+
+
   #Returns all the receipts of messageable, from Messages and Notifications
   def receipts(options = {})
     Mailboxer::Receipt.where(options).recipient(messageable)
