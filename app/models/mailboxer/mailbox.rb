@@ -71,8 +71,8 @@ class Mailboxer::Mailbox
   #Returns the conversations in the trash of messageable
   #
   #Same as conversations({:mailbox_type => 'trash'})
-  def not_trash(options={})
-    options = options.merge(:mailbox_type => 'not_trash')
+  def sentbox_inbox(options={})
+    options = options.merge(:mailbox_type => ['inbox', 'sentbox'])
     conversations(options)
   end
 
@@ -131,8 +131,8 @@ class Mailboxer::Mailbox
       Mailboxer::Conversation.sentbox(messageable)
     when 'trash'
       Mailboxer::Conversation.trash(messageable)
-    when  'not_trash'
-      Mailboxer::Conversation.not_trash(messageable)
+    when ['inbox', 'sentbox']
+      Mailboxer::Conversation.sentbox_inbox(messageable)
     else
       Mailboxer::Conversation.participant(messageable)
     end

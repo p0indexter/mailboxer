@@ -29,7 +29,7 @@ class Mailboxer::Conversation < ActiveRecord::Base
   scope :unread,  lambda {|participant|
     participant(participant).merge(Mailboxer::Receipt.is_unread)
   }
-  scope :not_trash,  lambda {|participant|
+  scope :sentbox_inbox,  lambda {|participant|
     participant(participant).merge(Mailboxer::Receipt.sentbox_inbox.not_trash.not_deleted)
   }
   scope :between, lambda {|participant_one, participant_two|
