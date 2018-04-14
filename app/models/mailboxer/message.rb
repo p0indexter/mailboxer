@@ -5,6 +5,8 @@ class Mailboxer::Message < Mailboxer::Notification
   belongs_to :conversation, :validate => true, :autosave => true
   validates_presence_of :sender
 
+  has_many :receipts,  :class_name => "Mailboxer::Receipt"
+
   class_attribute :on_deliver_callback
   protected :on_deliver_callback
   scope :conversation, lambda { |conversation|
@@ -12,6 +14,46 @@ class Mailboxer::Message < Mailboxer::Notification
   }
 
   mount_uploader :attachment, Mailboxer::AttachmentUploader
+
+
+
+  #Mark the conversation as read for one of the participants
+  def mark_as_read(participant)
+    return unless participant
+    self.receipts.recipient(participant).mark_as_read
+  end
+
+  #Mark the conversation as unread for one of the participants
+  def mark_as_unread(participant)
+    return unless participant
+    self.receipts.recipient(participant).mark_as_unread
+  end
+
+  #Mark the conversation as important
+  def mark_as_important(participant)
+    return unless participant
+    self.receipts.recipient(participant).mark_as_important
+  end
+
+  #Mark the conversation as important
+  def mark_as_unimportant(participant)
+    return unless participant
+    self.receipts.recipient(participant).mark_as_unimportant
+  end
+
+  #Move the conversation to the trash for one of the participants
+  def move_to_trash(participant)
+    return unless participant
+    self.receipts.recipient(participant).move_to_trash
+  end
+
+  #Takes the conversation out of the trash for one of the participants
+  def untrash(participant)
+    return unless participant
+    self.receipts.recipient(participant).untrash
+  end
+
+
 
   class << self
     #Sets the on deliver callback method.
