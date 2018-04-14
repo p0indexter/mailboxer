@@ -5,7 +5,7 @@ class Mailboxer::Message < Mailboxer::Notification
   belongs_to :conversation, :validate => true, :autosave => true
   validates_presence_of :sender
 
-  has_many :receipts,  :class_name => "Mailboxer::Receipt"
+  has_many :receipts,  :class_name => "Mailboxer::Receipt", foreign_key: "notification_id"
 
   class_attribute :on_deliver_callback
   protected :on_deliver_callback
