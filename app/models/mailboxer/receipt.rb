@@ -31,8 +31,20 @@ class Mailboxer::Receipt < ActiveRecord::Base
   scope :not_deleted, lambda { where(:deleted => false) }
   scope :is_read, lambda { where(:is_read => true) }
   scope :is_unread, lambda { where(:is_read => false) }
+  scope :is_important, lambda { where(:is_important => true) }
 
   class << self
+
+    #Marks all the receipts from the relation as important
+    def mark_as_important(options={})
+      update_receipts({:is_important => true}, options)
+    end
+
+    #Marks all the receipts from the relation as unimportant
+    def mark_as_unimportant(options={})
+      update_receipts({:is_important => false}, options)
+    end
+
     #Marks all the receipts from the relation as read
     def mark_as_read(options={})
       update_receipts({:is_read => true}, options)
@@ -79,6 +91,15 @@ class Mailboxer::Receipt < ActiveRecord::Base
     end
   end
 
+  #Marks the receipt as important
+  def mark_as_important
+    update_attributes(:important => true)
+  end
+
+  #Marks the receipt as unimportant
+  def mark_as_unimportant
+    update_attributes(:important => true)
+  end
 
   #Marks the receipt as deleted
   def mark_as_deleted

@@ -163,6 +163,11 @@ class Mailboxer::Conversation < ActiveRecord::Base
     !is_unread?(participant)
   end
 
+  def is_important?(participant)
+    return false unless participant
+    receipts_for(participant).not_trash.is_important.count != 0
+  end
+
   #Returns true if the participant has at least one unread message of the conversation
   def is_unread?(participant)
     return false unless participant
