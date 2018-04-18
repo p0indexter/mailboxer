@@ -61,7 +61,17 @@ class Mailboxer::Conversation < ActiveRecord::Base
   #Mark the conversation as important
   def mark_as_unimportant(participant)
     return unless participant
-    receipts_for(participant).mark_as_unimportant
+    receipts_for(participant).mark_as_important
+  end
+
+  #Mark the conversation as important
+  def mark_all_as_important
+    Mailboxer::Receipt.conversation(self).mark_as_unimportant
+  end
+
+  #Mark the conversation as important
+  def mark_all_as_unimportant
+    Mailboxer::Receipt.conversation(self).mark_as_unimportant
   end
 
   #Mark the conversation as unread for one of the participants
