@@ -51,6 +51,11 @@ module Mailboxer
       end
 
       # Get number of unread messages
+      def unread_inbox_important_count
+        mailbox.inbox(unread: true, is_important: true).count
+      end
+
+      # Get number of unread messages
       def unread_count
         mailbox.sentbox_inbox(unread: true).count
       end
