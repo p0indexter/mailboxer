@@ -1,11 +1,11 @@
-class Mailboxer::Message < Mailboxer::Notification
+class Plugins::Mailboxer::Message < Plugins::Mailboxer::Notification
   attr_accessible :attachment if Mailboxer.protected_attributes?
   self.table_name = :mailboxer_notifications
 
   belongs_to :conversation, :validate => true, :autosave => true
   validates_presence_of :sender
 
-  has_many :receipts,  :class_name => "Mailboxer::Receipt", foreign_key: "notification_id"
+  has_many :receipts,  :class_name => "::Plugins::Mailboxer::Receipt", foreign_key: "notification_id"
 
   class_attribute :on_deliver_callback
   protected :on_deliver_callback

@@ -1,4 +1,4 @@
-class Mailboxer::Mailbox
+class Plugins::Mailboxer::Mailbox
   attr_reader :messageable
 
   #Initializer method
@@ -9,7 +9,7 @@ class Mailboxer::Mailbox
   #Returns the notifications for the messageable
   def notifications(options = {})
     #:type => nil is a hack not to give Messages as Notifications
-    notifs = Mailboxer::Notification.recipient(messageable).where(:type => nil).order(:created_at => :desc, :id => :desc)
+    notifs = ::Plugins::Mailboxer::Notification.recipient(messageable).where(:type => nil).order(:created_at => :desc, :id => :desc)
     if options[:read] == false || options[:unread]
       notifs = notifs.unread
     end
@@ -19,7 +19,7 @@ class Mailboxer::Mailbox
 
   #Returns the conversations between messageable and other messageable
   def conversations_with(other_messageable)
-    Mailboxer::Conversation.between(messageable, other_messageable)
+    ::Plugins::Mailboxer::Conversation.between(messageable, other_messageable)
   end
 
   #Returns the conversations for the messageable
@@ -79,7 +79,7 @@ class Mailboxer::Mailbox
 
   #Returns all the receipts of messageable, from Messages and Notifications
   def receipts(options = {})
-    Mailboxer::Receipt.where(options).recipient(messageable)
+    ::Plugins::Mailboxer::Receipt.where(options).recipient(messageable)
   end
 
   #Deletes all the messages in the trash of messageable.
@@ -114,9 +114,9 @@ class Mailboxer::Mailbox
   #If object isn't one of the above, a nil will be returned
   def receipts_for(object)
     case object
-    when Mailboxer::Message, Mailboxer::Notification
+    when ::Plugins::Mailboxer::Message, ::Plugins::Mailboxer::Notification
       object.receipt_for(messageable)
-    when Mailboxer::Conversation
+    when ::Plugins::Mailboxer::Conversation
       object.receipts_for(messageable)
     end
   end
@@ -126,15 +126,15 @@ class Mailboxer::Mailbox
   def get_conversations(mailbox)
     case mailbox
     when 'inbox'
-      Mailboxer::Conversation.inbox(messageable)
+      ::Plugins::Mailboxer::Conversation.inbox(messageable)
     when 'sentbox'
-      Mailboxer::Conversation.sentbox(messageable)
+      ::Plugins::Mailboxer::Conversation.sentbox(messageable)
     when 'trash'
-      Mailboxer::Conversation.trash(messageable)
+      ::Plugins::Mailboxer::Conversation.trash(messageable)
     when ['inbox', 'sentbox']
-      Mailboxer::Conversation.sentbox_inbox(messageable)
+      ::Plugins::Mailboxer::Conversation.sentbox_inbox(messageable)
     else
-      Mailboxer::Conversation.participant(messageable)
+      ::Plugins::Mailboxer::Conversation.participant(messageable)
     end
   end
 end

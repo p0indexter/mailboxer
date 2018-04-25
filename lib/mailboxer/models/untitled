@@ -1,0 +1,61 @@
+
+<div class="guest uk-grid-small uk-flex-bottom uk-flex-left" uk-grid>
+    
+    <div class="uk-width-auto">
+        <img class="uk-border-circle" width="32" height="32" src="https://getuikit.com/docs/images/avatar.jpg">
+        </div>
+        <div class="uk-width-auto">
+          <div class="uk-card uk-card-body uk-card-small uk-card-default uk-border-rounded">
+            <p class="uk-margin-remove">Hey dude!</p>
+          </div>
+        </div>
+    </div>
+
+    <div class="me uk-grid-small uk-flex-bottom uk-flex-right uk-text-right" uk-grid>
+      <div class="uk-width-auto">
+        <div class="uk-card uk-card-body uk-card-small uk-card-primary uk-border-rounded">
+          <p class="uk-margin-remove">Hi brow :)</p>
+          <p class="uk-margin-remove">What's up?</p>
+        </div>
+      </div>
+
+
+      <div class="uk-width-auto">
+        <img class="uk-border-circle" width="32" height="32" src="https://getuikit.com/docs/images/avatar.jpg">
+      </div>
+    </div>
+
+    <div class="guest uk-grid-small uk-flex-bottom uk-flex-left" uk-grid>
+      <div class="uk-width-auto">
+        <img class="uk-border-circle" width="32" height="32" src="https://getuikit.com/docs/images/avatar.jpg">
+      </div>
+      <div class="uk-width-auto">
+        <div class="uk-card uk-card-body uk-card-small uk-card-default uk-border-rounded">
+          <p class="uk-margin-remove">Nothing Much!</p>
+      </div>
+    </div>
+    
+  </div>
+
+
+    <div class="guest uk-grid-small uk-flex-bottom uk-flex-left" uk-grid>
+    <div class="uk-width-auto">
+        <img class="uk-border-circle" width="32" height="32" src="https://getuikit.com/docs/images/avatar.jpg">
+        </div>
+        <div class="uk-width-auto">
+        <div class="uk-card uk-card-body uk-card-small uk-card-default uk-border-rounded">
+        <p class="uk-margin-remove">Nothing Much!</p>
+    </div>
+    </div>
+    </div>
+
+    <div class="guest uk-grid-small uk-flex-bottom uk-flex-left" uk-grid>
+    <div class="uk-width-auto">
+        <img class="uk-border-circle" width="32" height="32" src="https://getuikit.com/docs/images/avatar.jpg">
+        </div>
+        <div class="uk-width-auto">
+        <div class="uk-card uk-card-body uk-card-small uk-card-default uk-border-rounded">
+        <p class="uk-margin-remove">Nothing Much!</p>
+    </div>
+    </div>
+    </div>

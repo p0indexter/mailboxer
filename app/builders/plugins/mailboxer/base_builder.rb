@@ -1,4 +1,4 @@
-class Mailboxer::BaseBuilder
+class Plugins::Mailboxer::BaseBuilder
 
   attr_reader :params
 

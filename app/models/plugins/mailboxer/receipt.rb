@@ -1,4 +1,4 @@
-class Mailboxer::Receipt < ActiveRecord::Base
+class Plugins::Mailboxer::Receipt < ActiveRecord::Base
   self.table_name = :mailboxer_receipts
   attr_accessible :trashed, :is_read, :deleted if Mailboxer.protected_attributes?
 

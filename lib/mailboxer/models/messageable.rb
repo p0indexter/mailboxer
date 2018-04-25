@@ -137,11 +137,11 @@ module Mailboxer
       #* An array with any of them
       def mark_as_read(obj)
         case obj
-        when Mailboxer::Receipt
+        when ::Plugins::Mailboxer::Receipt
           obj.mark_as_read if obj.receiver == self
-        when Mailboxer::Message, Mailboxer::Notification
+        when ::Plugins::Mailboxer::Message, ::Plugins::Mailboxer::Notification
           obj.mark_as_read(self)
-        when Mailboxer::Conversation
+        when ::Plugins::Mailboxer::Conversation
           obj.mark_as_read(self)
         when Array
           obj.map{ |sub_obj| mark_as_read(sub_obj) }
@@ -158,11 +158,11 @@ module Mailboxer
       #* An array with any of them
       def mark_as_unread(obj)
         case obj
-        when Mailboxer::Receipt
+        when ::Plugins::Mailboxer::Receipt
           obj.mark_as_unread if obj.receiver == self
-        when Mailboxer::Message, Mailboxer::Notification
+        when ::Plugins::Mailboxer::Message, ::Plugins::Mailboxer::Notification
           obj.mark_as_unread(self)
-        when Mailboxer::Conversation
+        when ::Plugins::Mailboxer::Conversation
           obj.mark_as_unread(self)
         when Array
           obj.map{ |sub_obj| mark_as_unread(sub_obj) }
@@ -179,11 +179,11 @@ module Mailboxer
       #* An array with any of them
       def mark_as_deleted(obj)
         case obj
-          when Mailboxer::Receipt
+          when ::Plugins::Mailboxer::Receipt
             return obj.mark_as_deleted if obj.receiver == self
-          when Mailboxer::Message, Mailboxer::Notification
+          when ::Plugins::Mailboxer::Message, ::Plugins::Mailboxer::Notification
             obj.mark_as_deleted(self)
-          when Mailboxer::Conversation
+          when ::Plugins::Mailboxer::Conversation
             obj.mark_as_deleted(self)
           when Array
             obj.map{ |sub_obj| mark_as_deleted(sub_obj) }
@@ -202,11 +202,11 @@ module Mailboxer
       #* An array with any of them
       def trash(obj)
         case obj
-        when Mailboxer::Receipt
+        when ::Plugins::Mailboxer::Receipt
           obj.move_to_trash if obj.receiver == self
-        when Mailboxer::Message, Mailboxer::Notification
+        when ::Plugins::Mailboxer::Message, ::Plugins::Mailboxer::Notification
           obj.move_to_trash(self)
-        when Mailboxer::Conversation
+        when ::Plugins::Mailboxer::Conversation
           obj.move_to_trash(self)
         when Array
           obj.map{ |sub_obj| trash(sub_obj) }
@@ -223,11 +223,11 @@ module Mailboxer
       #* An array with any of them
       def untrash(obj)
         case obj
-        when Mailboxer::Receipt
+        when ::Plugins::Mailboxer::Receipt
           obj.untrash if obj.receiver == self
-        when Mailboxer::Message, Mailboxer::Notification
+        when ::Plugins::Mailboxer::Message, ::Plugins::Mailboxer::Notification
           obj.untrash(self)
-        when Mailboxer::Conversation
+        when ::Plugins::Mailboxer::Conversation
           obj.untrash(self)
         when Array
           obj.map{ |sub_obj| untrash(sub_obj) }
@@ -235,7 +235,7 @@ module Mailboxer
       end
 
       def search_messages(query)
-        @search = Mailboxer::Receipt.search do
+        @search = ::Plugins::Mailboxer::Receipt.search do
           fulltext query
           with :receiver_id, self.id
         end

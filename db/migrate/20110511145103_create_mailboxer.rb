@@ -2,13 +2,13 @@ class CreateMailboxer < ActiveRecord::Migration
   def self.up
   #Tables
     #Conversations
-    create_table :mailboxer_conversations do |t|
+    create_table :plugins_mailboxer_conversations do |t|
       t.column :subject, :string, :default => ""
       t.column :created_at, :datetime, :null => false
       t.column :updated_at, :datetime, :null => false
     end
     #Receipts
-    create_table :mailboxer_receipts do |t|
+    create_table :plugins_mailboxer_receipts do |t|
       t.references :receiver, :polymorphic => true
       t.column :notification_id, :integer, :null => false
       t.column :is_read, :boolean, :default => false
@@ -19,7 +19,7 @@ class CreateMailboxer < ActiveRecord::Migration
       t.column :updated_at, :datetime, :null => false
     end
     #Notifications and Messages
-    create_table :mailboxer_notifications do |t|
+    create_table :plugins_mailboxer_notifications do |t|
       t.column :type, :string
       t.column :body, :text
       t.column :subject, :string, :default => ""
@@ -57,8 +57,8 @@ class CreateMailboxer < ActiveRecord::Migration
     remove_foreign_key "mailboxer_notifications", :name => "notifications_on_conversation_id"
 
   #Indexes
-    drop_table :mailboxer_receipts
-    drop_table :mailboxer_conversations
-    drop_table :mailboxer_notifications
+    drop_table :plugins_mailboxer_receipts
+    drop_table :plugins_mailboxer_conversations
+    drop_table :plugins_mailboxer_notifications
   end
 end

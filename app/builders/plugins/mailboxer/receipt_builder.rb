@@ -1,9 +1,9 @@
-class Mailboxer::ReceiptBuilder < Mailboxer::BaseBuilder
+class Plugins::Mailboxer::ReceiptBuilder < Mailboxer::BaseBuilder
 
   protected
 
   def klass
-    Mailboxer::Receipt
+    Plugins::Mailboxer::Receipt
   end
 
   def mailbox_type

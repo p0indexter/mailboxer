@@ -1,4 +1,4 @@
-class Mailboxer::Notification < ActiveRecord::Base
+class Plugins::Mailboxer::Notification < ActiveRecord::Base
   self.table_name = :mailboxer_notifications
 
   attr_accessor :recipients
@@ -6,7 +6,7 @@ class Mailboxer::Notification < ActiveRecord::Base
 
   belongs_to :sender, :polymorphic => :true, :required => false
   belongs_to :notified_object, :polymorphic => :true, :required => false
-  has_many :receipts, :dependent => :destroy, :class_name => "Mailboxer::Receipt"
+  has_many :receipts, :dependent => :destroy, :class_name => "::Plugins::Mailboxer::Receipt"
 
   validates :subject, :length => { :maximum => Mailboxer.subject_max_length }
   validates :body,    :presence => true,

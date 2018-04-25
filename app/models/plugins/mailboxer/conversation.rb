@@ -1,11 +1,11 @@
-class Mailboxer::Conversation < ActiveRecord::Base
+class Plugins::Mailboxer::Conversation < ActiveRecord::Base
   self.table_name = :mailboxer_conversations
 
   attr_accessible :subject if Mailboxer.protected_attributes?
 
-  has_many :opt_outs, :dependent => :destroy, :class_name => "Mailboxer::Conversation::OptOut"
-  has_many :messages, :dependent => :destroy, :class_name => "Mailboxer::Message"
-  has_many :receipts, :through => :messages,  :class_name => "Mailboxer::Receipt"
+  has_many :opt_outs, :dependent => :destroy, :class_name => "::Plugins::Mailboxer::Conversation::OptOut"
+  has_many :messages, :dependent => :destroy, :class_name => "::Plugins::Mailboxer::Message"
+  has_many :receipts, :through => :messages,  :class_name => "::Plugins::Mailboxer::Receipt"
 
   validates :subject, :presence => true,
                       :length => { :maximum => Mailboxer.subject_max_length }
@@ -13,27 +13,27 @@ class Mailboxer::Conversation < ActiveRecord::Base
   before_validation :clean
 
   scope :participant, lambda {|participant|
-    where('mailboxer_notifications.type'=> Mailboxer::Message.name).
+    where('mailboxer_notifications.type'=> ::Plugins::Mailboxer::Message.name).
     order(updated_at: :desc).
-    joins(:receipts).merge(Mailboxer::Receipt.recipient(participant)).distinct
+    joins(:receipts).merge(::Plugins::Mailboxer::Receipt.recipient(participant)).distinct
   }
   scope :inbox, lambda {|participant|
-    participant(participant).merge(Mailboxer::Receipt.inbox.not_trash.not_deleted)
+    participant(participant).merge(::Plugins::Mailboxer::Receipt.inbox.not_trash.not_deleted)
   }
   scope :sentbox, lambda {|participant|
-    participant(participant).merge(Mailboxer::Receipt.sentbox.not_trash.not_deleted)
+    participant(participant).merge(::Plugins::Mailboxer::Receipt.sentbox.not_trash.not_deleted)
   }
   scope :trash, lambda {|participant|
-    participant(participant).merge(Mailboxer::Receipt.trash)
+    participant(participant).merge(::Plugins::Mailboxer::Receipt.trash)
   }
   scope :unread,  lambda {|participant|
-    participant(participant).merge(Mailboxer::Receipt.is_unread)
+    participant(participant).merge(::Plugins::Mailboxer::Receipt.is_unread)
   }
   scope :sentbox_inbox,  lambda {|participant|
-    participant(participant).merge(Mailboxer::Receipt.sentbox_inbox.not_trash.not_deleted)
+    participant(participant).merge(::Plugins::Mailboxer::Receipt.sentbox_inbox.not_trash.not_deleted)
   }
   scope :between, lambda {|participant_one, participant_two|
-    joins("INNER JOIN (#{Mailboxer::Notification.recipient(participant_two).to_sql}) participant_two_notifications " \
+    joins("INNER JOIN (#{::Plugins::Mailboxer::Notification.recipient(participant_two).to_sql}) participant_two_notifications " \
           "ON participant_two_notifications.conversation_id = #{table_name}.id AND participant_two_notifications.type IN ('Mailboxer::Message')").
         joins("INNER JOIN mailboxer_receipts ON mailboxer_receipts.notification_id = participant_two_notifications.id").
         merge(Mailboxer::Receipt.recipient(participant_one)).
@@ -66,12 +66,12 @@ class Mailboxer::Conversation < ActiveRecord::Base
 
   #Mark the conversation as important
   def mark_all_as_important
-    Mailboxer::Receipt.conversation(self).mark_as_important
+    ::Plugins::Mailboxer::Receipt.conversation(self).mark_as_important
   end
 
   #Mark the conversation as important
   def mark_all_as_unimportant
-    Mailboxer::Receipt.conversation(self).mark_as_unimportant
+    ::Plugins::Mailboxer::Receipt.conversation(self).mark_as_unimportant
   end
 
   #Mark the conversation as unread for one of the participants
@@ -136,12 +136,12 @@ class Mailboxer::Conversation < ActiveRecord::Base
 
   #Returns the receipts of the conversation for one participants
   def receipts_for(participant)
-    Mailboxer::Receipt.conversation(self).recipient(participant)
+    Plugins::Mailboxer::Receipt.conversation(self).recipient(participant)
   end
 
   #Returns the number of messages of the conversation
   def count_messages
-    Mailboxer::Message.conversation(self).count
+    Plugins::Mailboxer::Message.conversation(self).count
   end
 
   #Returns true if the messageable is a participant of the conversation
@@ -153,7 +153,7 @@ class Mailboxer::Conversation < ActiveRecord::Base
   #Adds a new participant to the conversation
   def add_participant(participant)
     messages.each do |message|
-      Mailboxer::ReceiptBuilder.new({
+      Plugins::Mailboxer::ReceiptBuilder.new({
         :notification => message,
         :receiver     => participant,
         :updated_at   => message.updated_at,
@@ -228,6 +228,6 @@ class Mailboxer::Conversation < ActiveRecord::Base
   end
 
   def sanitize(text)
-    ::Mailboxer::Cleaner.instance.sanitize(text)
+    Mailboxer::Cleaner.instance.sanitize(text)
   end
 end
